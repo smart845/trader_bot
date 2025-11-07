@@ -1,0 +1,8 @@
+python-telegram-bot
+pandas
+numpy
+ta
+requests
+uvicorn
+fastapi
+python-dotenv
