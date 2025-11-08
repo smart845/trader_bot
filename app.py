@@ -35,8 +35,13 @@ async def webhook_post(request: Request):
         data = await request.json()
         bot = Bot(token=TOKEN)
         update = Update.de_json(data, bot)
+
+        if 'bot_application' not in globals() or bot_application is None:
+            logger.error("bot_application не инициализирован!")
+            return Response(status_code=500, content="bot_application not initialized")
+
         await bot_application.process_update(update)
-        return Response(status_code=200)
+        return Response(content="ok", status_code=200)
     except Exception as e:
         logger.exception(f"Ошибка при обработке webhook: {e}")
-        return Response(status_code=500)
+        return Response(status_code=500, content="error")
